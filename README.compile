@@ -1,0 +1,13 @@
+##########################################
+#	README compiling WRF		 #
+#   Sjoerd Barten, 2023/04/03		 #
+##########################################
+
+This README describes how to sucessfully compile the WRF V4.1.4 model on HPC Anunna (WUR). Run the following commands in your */WRF/ directory
+
+module unload glibc
+export NETCDF_classic=1
+./clean -a			(needed when changes in registry files are made)
+./configure			(choose option 15 (INTEL ifort / gcc) and then nesting option 1)
+./compile em_real >& compile.log &
+tail -f compile.log

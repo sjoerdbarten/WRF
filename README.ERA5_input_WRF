@@ -1,0 +1,46 @@
+##########################################
+#	README ERA5 WRF		 #
+#   Sjoerd Barten, 2024/01/15		 #
+#   sjoerd.barten@wur.nl   #
+##########################################
+
+This README describes how to use ERA5 as initial and boundary conditions for WRF simulations for future reference. Please follow the steps below.
+Note that geogrid is independent of processing the ERA5 initial and boundary conditions. Hence, this can (and preferably should) be run before setting up ungrib and metgrid.
+
+Step 1: Download ECMWF ERA5 data.
+ERA5 data is freely available at the Climate Data Store (cds.climate.copernicus.eu). It requires you to have a registered account, but these can be made free of charge. Apart from downloading through the interactive website, you can download ERA5 data through API requests. For simplicity, this README only describes how to download the data through the website.
+You will need to download ERA5 from two different sources: The single levels (e.g. 10-m wind speed, 2-m temperature, soil temperatures) and pressure levels (e.g. temperature, moisture and wind profiles). These are available at https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels (single levels) and cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels (pressure levels).
+
+Step 1.1: Download single levels:
+Select the following parameters: 10m u-component of wind, 10m v-component of wind, 2m dewpoint temperature, 2m temperature, sea surface temperature, surface pressure, mean sea level pressure, skin temperature, snow depth, snow density, soil temperature level 1-4, volumetric soil water layer 1-4, land-sea mask, sea-ice cover.
+Select the time period (year, month and day) of your WRF simulation. Note that times are always in UTC and take the model spin-up into account.
+Select the times of day of which you want the ERA5 data. You provide the model with the boundary conditions every hour, every 3 hours or every 6 hours (make sure to check your namelist.wps about this timestepping!).
+Select the sub-region to extract (to save time and storage space). Make sure that your subtracted region completely covers your WRF model domain.
+Select GRIB Format.
+Submit form and wait for the download to be ready.
+
+Step 1.2: Download pressure levels:
+Select the following parameters: geopotential, temperature, U-component of wind, V-component of wind.
+Select all pressure levels.
+Select the time period (year, month and day) of your WRF simulation. Note that times are always in UTC and take the model spin-up into account.
+Select the times of day of which you want the ERA5 data. You provide the model with the boundary conditions every hour, every 3 hours or every 6 hours (make sure to check your namelist.wps about this timestepping!).
+Select the sub-region to extract (to save time and storage space). Make sure that your subtracted region completely covers your WRF model domain.
+Select GRIB Format.
+Submit form and wait for the download to be ready.
+
+Step 2: Prepare and run unbrib.
+Typically, you save your ERA5 data in the */ECMWF folder, where * is whatever name you have given to this WRF installation. You can put old files in another folder within the ECMWF/ folder (e.g. ECMWF/old_runs).
+Edit your namelist.wps to make sure you provide the model with the right settings. Pay special attention to the interval_seconds (how often you want to update your boundary condiitons) and the start date and end dates.
+Now we need to link the correct Variable Table, and link the data to the WPS folder before running ungrib. Make sure you are located in the */WPS/ folder when you run the following commands:
+ln -sf ungrib/Variable_Tables/Vtable.ECMWF Vtable
+./link_grib.csh ../ECMWF/*
+./ungrib.exe
+
+Step 3: Prepare and run metgrid.
+Make sure the ungrib program ran succesfully (e.g. checking the ungrib.log file that is created). Once you are sure ungrib ran succesfully and you have the new files FILE:YYYY-MM-DD_HH, you can proceed with metgrid.
+Check your namelist.wps one last time before running metgrid.
+./metgrid.exe
+
+Step 4: Check whether metgrid ran succesfully and continue as usual
+Make sure the metgrid program ran succesfully (e.g. checking the metgrid.log file). Once you are sure metgrid ran succesfully and you have the new files met_em.d0*.YYYY-MM-DD_HH:mm:ss.nc, you can proceed.
+From here on, you would set up the WRF model as usual (go to the run folder, link the met_em files, edit your namelist.input settings, run realjob and wrfjob). A detailed description of these steps is not provided here, because it is out of scope of this README.
