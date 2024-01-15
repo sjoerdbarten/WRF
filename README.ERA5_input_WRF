@@ -1,8 +1,8 @@
-##########################################
-#	README ERA5 WRF		 #
+##################################
+#	       README ERA5 WRF		     #
 #   Sjoerd Barten, 2024/01/15		 #
-#   sjoerd.barten@wur.nl   #
-##########################################
+#     sjoerd.barten@wur.nl       #
+##################################
 
 This README describes how to use ERA5 as initial and boundary conditions for WRF simulations for future reference. Please follow the steps below.
 Note that geogrid is independent of processing the ERA5 initial and boundary conditions. Hence, this can (and preferably should) be run before setting up ungrib and metgrid.
