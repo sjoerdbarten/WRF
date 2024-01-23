@@ -1,0 +1,12 @@
+##########################################
+#	README compiling WPS		 #
+#   Sjoerd Barten, 2024/01/23		 #
+##########################################
+
+This README describes how to sucessfully compile WPS V4.1 on HPC Anunna (WUR). The same prodecure is also tested on WPS V4.5. Run the following commands in your */WRF/ directory:
+
+module unload glibc
+export NETCDF_classic=1			
+./configure			(choose option 17 Linux x86_64, Intel compiler    (serial))
+./compile
+
