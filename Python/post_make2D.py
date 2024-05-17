@@ -20,7 +20,7 @@ lon_1 = 4.92
 
 # which domain is selected
 
-domain        = "d02"
+domain        = "d01"
 
 
 # what is the name of the output file
