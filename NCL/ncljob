@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --comment=MAQ440-Prakt
+#SBATCH --time=00:00:30
+#SBATCH --ntasks=1
+#SBATCH --constraint=normalmem
+#SBATCH --output=nclout_%j.txt
+#SBATCH --error=nclerr_%j.txt
+#SBATCH --job-name=ncljob
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=reinder.ronda@wur.nl
+#SBATCH --constraint=avx512
+
+ncl make2D.ncl

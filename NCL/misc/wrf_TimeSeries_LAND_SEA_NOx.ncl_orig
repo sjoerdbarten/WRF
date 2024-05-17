@@ -1,0 +1,151 @@
+;   Example script to produce plots for a WRF real-data run,
+;   with the ARW coordinate dynamics option.
+;   Plot data in xy-plot 
+ 
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/time_axis_labels.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRF_contributed.ncl"
+
+begin
+ ; What kind of plot do you prefer?
+   type                                      = "newpdf"
+   wks                                       = gsn_open_wks(type,"plt_TimeSeries_NOx") 
+ ; The WRF ARW input file. This needs to have a ".nc" appended, so just do it.
+   fileID                                    = addfile("$HOME/atmos2020/WRF/run/wrfout_d02_2018-06-05_00:00:00.nc","r")
+   
+ ; --- Define station coordinates and find indices into xlat/xlon ---
+   iz                                        = 0
+   lat_1                                     = 52.293564 ; De Zilk Vogelaarsdreef
+   lon_1                                     =  4.502185 ; De Zilk Vogelaarsdreef
+   loc_1                                     = wrf_user_latlon_to_ij(fileID, lat_1, lon_1)
+   ix_1                                      = loc_1(1)
+   iy_1                                      = loc_1(0)
+   print("De Zilk: (iy,ix) = (" +iy_1 + ", " + ix_1 + ")") 
+
+   lat_2                                     = 52.134596 ; Zegveld-De Meije
+   lon_2                                     =  4.808560 ; Zegveld-De Meije
+   loc_2                                     = wrf_user_latlon_to_ij(fileID, lat_2, lon_2)
+   ix_2                                      = loc_2(1)
+   iy_2                                      = loc_2(0)
+   print("Zegveld: (iy,ix) = (" +iy_2 + ", " + ix_2 + ")") 
+
+   lat_3                                     = 52.104891 ; Wekerom
+   lon_3                                     =  5.723901 ; Wekerom
+   loc_3                                     = wrf_user_latlon_to_ij(fileID, lat_3, lon_3)
+   ix_3                                      = loc_3(1)
+   iy_3                                      = loc_3(0)
+   print("Wekerom: (iy,ix) = (" +iy_3 + ", " + ix_3 + ")") 
+
+ ; --- Input ---
+ ; Observations are from 2016-05-09 00:00h to 2006-05-12 00:00h
+    NOx_Zilk_obs = (/46.55,15.87,20.99,22.65,18.97,18.04,24.41,34.47,41.52,43.98,43.67,40.39,36.70,29.35,23.56,14.65,12.87,11.00,11.20,12.02,14.88,15.86,25.06,22.84,19.61,13.45,15.36,16.17,19.60,23.53,31.77,45.95,51.15,56.19,40.74,23.17,24.23,19.78,25.40,16.43,18.86,22.36,20.18,44.25,46.68,31.61,31.47,35.11,33.48,31.98,43.77,40.29,26.84,25.01,29.52,42.31,95.54,92.77,55.63,24.85,50.49,45.85,29.57,14.56,18.24,8.880,6.080,10.96,16.51,12.67,16.05,28.49,28.87/)
+   NOx_Zegveld_obs = (/51.51,19.99,22.15,17.25,13.11,15.10,20.03,25.33,24.99,26.41,24.57,21.15,15.26,09.28,08.97,09.05,11.06,09.47,10.54,18.20,18.02,28.34,15.41,16.47,18.03,15.34,17.26,17.58,15.81,15.82,19.51,28.06,32.80,30.20,27.40,27.92,25.65,24.30,15.16,10.89,08.12,09.74,10.37,12.36,14.91,19.17,18.15,23.20,25.47,23.62,31.26,26.55,20.11,19.90,28.41,52.34,61.90,64.34,53.12,35.51,15.43,16.70,12.48,10.09,09.58,10.47,10.86,13.64,15.42,17.86,16.33,17.36,18.25/) 
+   NOx_Wekerom_obs = (/23.17,00.00,16.44,11.18,09.64,11.69,18.50,20.54,19.41,17.12,15.22,12.07,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,00.00,52.96,52.41,35.66,00.00,37.00,29.39,32.51,14.80,08.42,07.76,09.85,11.84,12.61,07.64,10.39,14.79,32.19,88.57,60.43,82.94,38.20,27.13,28.37,41.25,54.10,63.03,73.64,51.82,33.79,20.57,10.07,09.03,19.99,07.24,07.31,14.96,18.90,12.52,16.29,28.31,34.38,13.76,12.77,16.16/)
+   print(NOx_Zilk_obs)
+   times                                     = wrf_times_c(fileID->Times,0)
+   NOx                                       = wrf_user_getvar(fileID,"NOx", -1)             ; NOx        (nz,ny,nx) ppbv (95% * NO@30 kg/mol and 5% NO2 @46 kg/mol)
+   LND_tracer                                = wrf_user_getvar(fileID,"LAND_tracer", -1)*1000; LND_tracer (nz,ny,nx) ppmv 
+   LND_tracer@units                          = "ppbv"
+   SEA_tracer                                = wrf_user_getvar(fileID,"SEA_tracer" , -1)*1000; SEA_tracer (nz,ny,nx) ppmv 
+   SEA_tracer@units                          = "ppbv"
+   ntimes                                    = dimsizes(times)                               ; number of times in the file
+   mdims                                     = getfilevardimsizes(fileID,"P")                ; get some dimension sizes for the file
+   nd                                        = dimsizes(mdims)                               ; 0:nt=73; 1:nz=30; 2:ny=30; 3:nx=30;
+   time                                      = ispan(0,ntimes-1,1)
+   
+   ; print (times(0))
+
+ ; --- Processing ----
+   ntimes                                    = dimsizes(times)
+ ; NOx                                       = (NOx-0.0115)*1000*1.35                        ; ppb --> ug/m3 with background correction
+   NOx                                       = (NOx-0.0000)*1000*1.35                        ; ppb --> ug/m3 without background correction
+   NOx@units                                 = "ug/m3"
+   print(dimsizes(NOx))
+   NOx_ts_1                                  = NOx(:,iz,iy_1,ix_1)
+   NOx_ts_2                                  = NOx(:,iz,iy_2,ix_2)
+   NOx_ts_3                                  = NOx(:,iz,iy_3,ix_3)
+   LND_ts_1                                  = LND_tracer(:,iz,iy_1,ix_1)
+   LND_ts_2                                  = LND_tracer(:,iz,iy_2,ix_2)
+   LND_ts_3                                  = LND_tracer(:,iz,iy_3,ix_3)
+   SEA_ts_1                                  = SEA_tracer(:,iz,iy_1,ix_1)
+   SEA_ts_2                                  = SEA_tracer(:,iz,iy_2,ix_2)
+   SEA_ts_3                                  = SEA_tracer(:,iz,iy_3,ix_3)
+
+ ; --- Output ----
+   opts                                      = True
+ ; opts@xyLineColor                          = "blue"
+ ; opts@xyLineThicknessF                     = 5   
+   opts@pmLegendDisplayMode                  = "Always"                                      ; turn on legend
+   opts@pmLegendSide                         = "Top"                                         ; Change location of 
+   opts@pmLegendParallelPosF                 = 0.25                                          ; positive moves units right
+   opts@pmLegendOrthogonalPosF               = -0.35                                         ; negative moves legend down
+   opts@pmLegendWidthF                       = 0.15                                          ; Change width and
+   opts@pmLegendHeightF                      = 0.18                                          ; height of legend.
+   opts@lgPerimOn                            = False                                         ; turn off box around
+   opts@lgLabelFontHeightF                   = .02                                           ; label font height
+   opts@tmYLFormat                           = "f"                                           ; remove trailing ".0"                                          
+   opts@tmXTOn                               = True
+   opts@tmXUseBottom                         = True
+   opts@tmXBLabelFontHeightF                 = 0.01
+   opts@tmXBLabelAngleF                      = 45
+ 
+ ; --------------------------------------------------
+ ; The time_axis_label function adds additional
+ ; resources to "res" to produce nicely-formatted 
+ ; time labels on X axis. This function only works 
+ ; if you have a time "units" recognized by the 
+ ; cd_calendar function.
+ ; --------------------------------------------------
+   
+ 
+   tickopts                                  = True
+   tickopts@ttmAxis                          = "XB" ; x-axis bottom
+   tickopts@ttmFormat                        = "%D-%c %H:%M"
+ ; plotopts@ttmNumticks                      = 7
+   tickopts@ttmMajorStride                   = 6
+   tickopts@ttmMinorStride                   = 2
+   
+   time_axis_labels(times,opts,tickopts)
+ ; time_axis_labels(time,  resplot, restick)
+   
+   opts_NOx                                  = opts
+   opts_NOx@tiXAxisString                    = "time into simulation (h)"
+   opts_NOx@tiYAxisString                    = "NOx (ug/m3)"
+   opts_NOx@xyExplicitLegendLabels           = (/" Wekerom (obs)", " Wekerom (WRF)", " Zegveld (obs)", " Zegveld (WRF)", " De Zilk (obs)", "De Zilk (WRF)" /)        ; create explicit labels; inverse order
+   opts_NOx@xyLineColors                     = (/"blue", "blue", "green", "green", "red", "red" /)                                       ; change line color; inverse order
+   opts_NOx@xyMonoDashPattern                = False
+   opts_NOx@xyDashPatterns                   = (/ 16, 0, 16, 0, 16, 0 /)                      ; inverse order
+   opts_NOx@xyLineThicknesses                = (/ 4.0, 6.0, 4.0, 6.0, 4.0, 6.0/)              ; line thickeness; inverse order
+   
+   opts_LNDSEA                               = opts
+   opts_LNDSEA@tiXAxisString                 = "time into simulation (h)"
+   opts_LNDSEA@tiYAxisString                 = "SEA tracer @Land stations (ppbv)"
+   opts_LNDSEA@xyExplicitLegendLabels        = (/"SEA Wekerom","SEA Zegveld","SEA De Zilk"/)  ; create explicit labels
+   opts_LNDSEA@xyLineColors                  = (/"green", "red",  "blue"/)                    ; change line color
+   opts_LNDSEA@xyMonoDashPattern             = False
+   opts_LNDSEA@xyDashPatterns                = (/ 0, 0, 0 /)                                  ; Make 1st 3 curves solid, last 3 dashed
+   opts_LNDSEA@xyLineThicknesses             = (/  5.0, 5.0, 5.0, 5.0, 5.0, 5.0/)             ; line thickeness
+
+   print("Discarding the first 24 hours of the run as spin-off...")
+   its                                       = 25
+   ite                                       = ntimes-1
+   print(dimsizes(NOx_Zilk_obs))
+   NOx_obs_1                                 = runave(NOx_Zilk_obs( its:ite),5,0)
+   NOx_obs_2                                 = runave(NOx_Zegveld_obs(its:ite),5,0)
+   NOx_obs_3                                 = runave(NOx_Wekerom_obs(its:ite),5,0)
+   print (dimsizes(NOx_ts_1))
+   NOx_mod_1                                 = NOx_ts_1(its:ite)
+   NOx_mod_2                                 = NOx_ts_2(its:ite)
+   NOx_mod_3                                 = NOx_ts_3(its:ite)
+   
+   print("De Zilk: (NOx,obs,NOx,mod) = " + avg(NOx_obs_1) + "," + avg(NOx_mod_1) + ")" ); dNOX = 13.4 ug/m3 --> 0.0099 ppm |
+   print("Zegveld: (NOx,obs,NOx,mod) = " + avg(NOx_obs_2) + "," + avg(NOx_mod_2) + ")" ); dNOx = 17.7 ug/m3 --> 0.0131 ppm |
+   print("Wekerom: (NOx,obs,NOx,mod) = " + avg(NOx_obs_3) + "," + avg(NOx_mod_3) + ")" ); dNOx =  3.6 ug/m3 --> 0.0026 ppm |--> avg 0.0085 ppm too high
+
+   plot                                      = gsn_csm_xy(wks, times(its:ite), (/SEA_ts_3(its:ite), SEA_ts_2(its:ite), SEA_ts_1(its:ite)/), opts_LNDSEA)
+   plot                                      = gsn_csm_xy(wks, times(its:ite), (/NOx_obs_3, NOx_mod_3, NOx_obs_2, NOx_mod_2, NOx_obs_1, NOx_mod_1 /), opts_NOx)  ; inverse order
+   print("Figures written to plt_TimeSeries_NOx.pdf.")
+   print("Observed concentrations are in $HOME/WRF/ConcentrationData/LML2006_05.xls, sheet GRAPHS")
+ end
