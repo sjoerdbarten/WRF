@@ -20,7 +20,7 @@ Select GRIB Format.
 Submit form and wait for the download to be ready.
 
 Step 1.2: Download pressure levels:
-Select the following parameters: geopotential, temperature, U-component of wind, V-component of wind.
+Select the following parameters: geopotential, temperature, U-component of wind, V-component of wind, specific humidity.
 Select all pressure levels.
 Select the time period (year, month and day) of your WRF simulation. Note that times are always in UTC and take the model spin-up into account.
 Select the times of day of which you want the ERA5 data. You provide the model with the boundary conditions every hour, every 3 hours or every 6 hours (make sure to check your namelist.wps about this timestepping!).
