@@ -1,0 +1,188 @@
+#####################################
+# 	README local software	    #
+#     installation for WRF-Chem     #
+#    Sjoerd Barten --- 2025/02/11   #
+#####################################
+
+To run compile and run WRF-Chem with gfortran.
+
+The following software is installed:
+zlib-1.2.11
+hdf5-1.10.5
+netcdf-c-4.7.2
+netcdf-fortran-4.5.2
+libpng-1.2.50
+jasper-1.900.1
+
+These go together with the 2023 easybuild software stack (and ncl legacy) in .bash_profile:
+module load 2023
+module load intel
+module load GCC
+module load OpenMPI
+module load Python
+module load GEOS
+module load legacy
+module load ncl
+
+Currently Loaded Modules:
+  1) slurm                                  (S)  14) GCC/12.3.0                        27) OpenMPI/4.1.5-GCC-12.3.0
+  2) 2023                                        15) XZ/5.4.2-GCCcore-12.3.0           28) bzip2/1.0.8-GCCcore-12.3.0
+  3) GCCcore/12.3.0                              16) libxml2/2.11.4-GCCcore-12.3.0     29) libreadline/8.2-GCCcore-12.3.0
+  4) zlib/1.2.13-GCCcore-12.3.0                  17) libpciaccess/0.17-GCCcore-12.3.0  30) Tcl/8.6.13-GCCcore-12.3.0
+  5) binutils/2.40-GCCcore-12.3.0                18) hwloc/2.9.1-GCCcore-12.3.0        31) SQLite/3.42.0-GCCcore-12.3.0
+  6) intel-compilers/2023.1.0                    19) OpenSSL/1.1                       32) libffi/3.4.4-GCCcore-12.3.0
+  7) numactl/2.0.16-GCCcore-12.3.0               20) libevent/2.1.12-GCCcore-12.3.0    33) Python/3.11.3-GCCcore-12.3.0
+  8) UCX/1.14.1-GCCcore-12.3.0                   21) ncurses/6.4-GCCcore-12.3.0        34) GEOS/3.12.0-GCC-12.3.0
+  9) impi/2021.9.0-intel-compilers-2023.1.0      22) util-linux/2.39-GCCcore-12.3.0    35) legacy
+ 10) imkl/2023.1.0                               23) PSM2/12.0.1-GCCcore-12.3.0        36) sl7-libs/main
+ 11) iimpi/2023a                                 24) libfabric/1.18.0-GCCcore-12.3.0   37) ncl/6.2.1
+ 12) imkl-FFTW/2023.1.0-iimpi-2023a              25) PMIx/4.2.4-GCCcore-12.3.0
+ 13) intel/2023a                                 26) UCC/1.2.0-GCCcore-12.3.0
+
+
+Note:
+Tried to also locally install OpenMPI (mpich-3.4.0 and mpich-4.2.1) but did not work. So using the 2023 easybuild OpenMPI now
+
+
+------------------------------------------------------------------------------------
+
+Follow the below instructions to install WRF and WPS with a GNU compiler. Alternatively, use this script for the library installations, but pay attention to the notes in the script.
+
+
+From a terminal window, create the following new directory:
+
+Code:
+mkdir wrf_dependencies
+
+Set the following environment variables.
+
+Code:
+DIR=$PWD/wrf_dependencies
+export NETCDF=$DIR/netcdf
+export LD_LIBRARY_PATH=$NETCDF/lib:$DIR/grib2/lib
+export PATH=$NETCDF/bin
+export JASPERLIB=$DIR/grib2/lib
+export JASPERINC=$DIR/grib2/include
+
+Set the following additional environment variables ONLY prior to building these dependencies. These SHOULD NOT be set when building WRF or WPS.
+
+Code:
+export CC=gcc
+export CXX=g++
+export FC=gfortran
+export FCFLAGS="-m64 -fallow-argument-mismatch"
+export F77=gfortran
+export FFLAGS="-m64 -fallow-argument-mismatch"
+export LDFLAGS="-L$NETCDF/lib -L$DIR/grib2/lib"
+export CPPFLAGS="-I$NETCDF/include -I$DIR/grib2/include -fcommon"
+
+
+Install zlib
+
+Code:
+wget https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/zlib-1.2.11.tar.gz
+tar xzvf zlib-1.2.11.tar.gz
+cd zlib-1.2.11
+./configure --prefix=$DIR/grib2
+make -j 4
+make install
+cd ..
+rm -rf zlib*
+
+
+Install HDF5
+
+Code:
+wget https://github.com/HDFGroup/hdf5/archive/hdf5-1_10_5.tar.gz
+tar xzvf hdf5-1.10.5.tar.gz
+cd hdf5-1.10.5
+./configure --prefix=$DIR/netcdf --with-zlib=$DIR/grib2 --enable-fortran --enable-shared
+make -j 4
+make install
+cd ..
+rm -rf hdf5*
+
+
+Install NetCDF-c
+
+Code:
+wget https://github.com/Unidata/netcdf-c/archive/v4.7.2.tar.gz
+tar xzvf v4.7.2.tar.gz
+cd netcdf-c-4.7.2
+./configure --prefix=$DIR/netcdf --disable-dap --enable-netcdf4 --enable-hdf5 --enable-shared
+make -j 4
+make install
+cd ..
+rm -rf v4.7.2.tar.gz netcdf-c*
+
+
+Install netcdf-fortran
+
+Code:
+export LIBS="-lnetcdf -lz"
+wget https://github.com/Unidata/netcdf-fortran/archive/v4.5.2.tar.gz
+tar xzvf v4.5.2.tar.gz
+cd netcdf-fortran-4.5.2
+./configure --prefix=$DIR/netcdf --disable-hdf5 --enable-shared
+make -j 4
+make install
+cd ..
+rm -rf netcdf-fortran* v4.5.2.tar.gz
+
+
+Install libpng
+
+Code:
+wget https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/libpng-1.2.50.tar.gz
+tar xzvf libpng-1.2.50.tar.gz
+cd libpng-1.2.50
+./configure --prefix=$DIR/grib2
+make -j 4
+make install
+cd ..
+rm -rf libpng*
+
+jasper
+
+Code:
+wget https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-1.900.1.tar.gz
+tar xzvf jasper-1.900.1.tar.gz
+cd jasper-1.900.1
+./configure --prefix=$DIR/grib2
+make -j 4
+make install
+cd ..
+rm -rf jasper*
+
+
+Now close the current terminal window, and open a new one. Environment variables set earlier will no longer be set. In the new terminal window, open up the .bashrc (or similar) file and and or edit the following entries. When done, save the file.
+
+Code:
+export NETCDF=$DIR/netcdf
+export LD_LIBRARY_PATH=$NETCDF/lib:$DIR/grib2/lib
+export PATH=$NETCDF/bin
+export JASPERLIB=$DIR/grib2/lib
+export JASPERINC=$DIR/grib2/include
+
+Source the .bashrc (or similar) file so the above commands go into effect for the current terminal window.
+
+Code:
+source .bashrc
+
+
+Build WRF
+
+Code:
+git clone --recurse-submodule https://github.com/wrf-model/WRF.git
+cd WRF
+./configure (choose options 34 and 1)
+./compile em_real -j 4 >& log.compile
+
+Build WPS
+
+Code:
+git clone https://github.com/wrf-model/WPS.git
+cd WPS
+export WRF_DIR=path-to-WRF-top-level-directory/WRF
+./configure (choose option 1)
+./compile >& log.compile
