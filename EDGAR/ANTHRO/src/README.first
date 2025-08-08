@@ -1,0 +1,53 @@
+!ESG_SB_20190425+
+**************************
+**************************
+**************************
+In general you should be able to preprocess the EDGAR emissions to a WRF domain using the available README's here.
+
+However, The interpolation of EDGAR to a WRF grid that includes the North Pole (90 deg N), and probably (not tested) the South Pole as well, as a gridpoint in your domain raises errors due to the the unavailability of EDGAR emissions and a surface area of 0.
+
+When this happens, you will get a segmentation fault but probably also this message:
+
+	! MAQ_lg_20190425+ included a print statement to notify the user that potentially issues do occur in 
+	!   processing the data for an area that includes the poles. This results then in segmentation faults,
+	!   due to the fact that data are not available for the grid point exactly at the pole, triggered in 
+	!   the subroutine area_interp of the fortran code area_mapper.f90
+
+	write(*,'(1a)') 'WHEN SEGEMENTATION FAULT. anthro_emis: Note that using this script for an area covering the North pole(s),'
+	write(*,'(1a)') 'can result in a segmentation fault'
+   	write(*,'(1a)') 'Then some modifications have to be made in the subroutine area_interp in area_mapper.f90'
+   	write(*,'(1a)') 'See this subroutine for the instructions (MAQ_lg_20190425* comments) on how to detect the source and fix the problem'
+
+	! MAQ_lg_20190425-
+
+
+So, we need to make some changes in the area_mapper.f90 script, this is all described in the script itself (repeated below):
+
+             ! MAQ_lg_20190425+ included a print statement to detect where it goes wrong with the processing
+	     !   of inputdata also covering the North/South Pole; to detect which data point should be skipped
+	     !   in the calculation of the term wrk_sum using the undefined term data_file%src_data(i,j) then
+	     !   uncomment the write statement below; this will indicate for which i and j value the calculation
+	     !   of wrk_sum should be skipped.
+             !write(*,*) 'area_interp: inside_mcell: before calc. wrk_sum: ',mlat_ndx,mlon_ndx,i,j,data_file%src_data(i,j)
+
+             ! MAQ_lg_20190425+ uncomment this line with the proper i & j value to fix the segmentation fault
+	     !if (i.ne.1891.and.j.ne.1801) wrk_sum = wrk_sum + dcell_area*data_file%src_data(i,j)
+             ! MAQ_lg_20190425+ and then comment this one
+	     wrk_sum    = wrk_sum + dcell_area*data_file%src_data(i,j)
+
+             ! MAQ_lg_20190425+ uncomment for further detecting the location for which a segementation happens
+             !write(*,*) 'area_interp: after calculation of wrk_sum: ',mlat_ndx,mlon_ndx,i,j,wrk_sum
+
+
+So steps:
+	1) Just run the script, when no gridpoint on poles, it should run fine
+If you get a segmentation fault and have a gridpoint on one of the poles:
+	2) Uncomment the two write(*,*) lines and find the proper i & j values where the segmentation fault occurs.
+	3) Change if (i.ne.1891.and.j.ne.1801) to the i & j values where the segmentation fault occurs
+	4) Uncomment the if (i.ne.1891.and.j.ne.1801) line.
+	5) Comment the wrk_sum	= wrk_sum +dcell_area line.
+	6) Run the script again and everything should be fine.
+**************************
+**************************
+**************************
+!ESG_SB_20190425-

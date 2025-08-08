@@ -1,0 +1,594 @@
+  
+ main: nemis =           18
+ =================================================
+ anthro_map(           1 ):
+ src species count =            1
+ emis species name = CO                              
+   1.000000    
+ CO                              
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           2 ):
+ src species count =            1
+ emis species name = NO                              
+  0.9500000    
+ NOx                             
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           3 ):
+ src species count =            1
+ emis species name = SO2                             
+   1.000000    
+ SO2                             
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           4 ):
+ src species count =            1
+ emis species name = NH3                             
+   1.000000    
+ NH3                             
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           5 ):
+ src species count =            1
+ emis species name = OC                              
+   1.000000    
+ OC                              
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           6 ):
+ src species count =            1
+ emis species name = PM25I                           
+   1.000000    
+ PM2.5                           
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           7 ):
+ src species count =            1
+ emis species name = PM10                            
+   1.000000    
+ PM10                            
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           8 ):
+ src species count =            1
+ emis species name = HC8                             
+   1.000000    
+ BIGALK                          
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(           9 ):
+ src species count =            1
+ emis species name = OLI                             
+   1.000000    
+ BIGENE                          
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          10 ):
+ src species count =            1
+ emis species name = OL2                             
+   1.000000    
+ C2H4                            
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          11 ):
+ src species count =            2
+ emis species name = ETH                             
+   1.000000       1.000000    
+ C2H5OH                          C2H6                            
+ cat wghts
+   1.000000    
+   1.000000    
+ =================================================
+ anthro_map(          12 ):
+ src species count =            1
+ emis species name = HCHO                            
+   1.000000    
+ CH2O                            
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          13 ):
+ src species count =            1
+ emis species name = ALD                             
+   1.000000    
+ CH3CHO                          
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          14 ):
+ src species count =            2
+ emis species name = KET                             
+   1.000000       1.000000    
+ CH3COCH3                        MEK                             
+ cat wghts
+   1.000000    
+   1.000000    
+ =================================================
+ anthro_map(          15 ):
+ src species count =            2
+ emis species name = HC3                             
+   1.000000       1.000000    
+ CH3OH                           C3H8                            
+ cat wghts
+   1.000000    
+   1.000000    
+ =================================================
+ anthro_map(          16 ):
+ src species count =            1
+ emis species name = TOL                             
+   1.000000    
+ TOLUENE                         
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          17 ):
+ src species count =            1
+ emis species name = OLT                             
+   1.000000    
+ C3H6                            
+ cat wghts
+   1.000000    
+ =================================================
+ anthro_map(          18 ):
+ src species count =            1
+ emis species name = NO2                             
+  5.0000001E-02
+ NOx                             
+ cat wghts
+   1.000000    
+  
+ src active
+ T T T T F T T T T T T T T T T T T T T T T
+ active src =           20
+ =================================================
+  
+ wrf_file: MAP_PROJ is POLAR STEREOGRAPHIC
+  
+ wrf_file: CEN_LON =    180.0000    
+ wrf_file: CEN_LAT =    90.00000    
+ wrf_file: STAND_LON =   0.0000000E+00
+ wrf_file: TRUELAT1 =    90.00000    
+ wrf_file: TRUELAT2 =   1.0000000E+20
+ wrf_file: DX =    30000.00    
+  
+ proj_init: projection =  2
+ proj_init: proj%hemi    =    1.000000    
+ proj_init: proj%rebydx  =    212.3333    
+ proj_init: proj%polei,j =    125.0000       125.0000    
+ proj_init: west-east,south-north =   249  249
+  
+ wrf domain corners
+ --- ------ -------
+ sw corner @ ( -45.000000    ,  45.124477    )
+ se corner @ (  45.000000    ,  45.124477    )
+ ne corner @ (  135.00000    ,  45.124477    )
+ nw corner @ ( -135.00000    ,  45.124477    )
+  
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ wrf_file: time = 2008-08-10_00:00:00
+ wrf_file: grid dimensions
+ wrf_file: ids,ide,jds,jde
+     1   249     1   249
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+ will use sub cats:  T
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_CO_2010.
+ 0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ data_file_init: file EDGAR_HTAP_emi_CO_2010.0.1x0.1.nc is a new grid
+data_file_init: xcen_src(1,2)  =  -179.949996948242     -179.850006103516    
+data_file_init: xedge(1,2) =  -179.999992370605     -179.900001525879    
+data_file_init: dx =                     10
+data_file_init: nlon_src,nlat_src =   3600   1800
+data_file_init: ycen_src  =   89.8499984741211      89.9499969482422    
+data_file_init: yedge_src =   89.8999938964844      89.9999961853027    
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_NOx_2010
+ .0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_SO2_2010
+ .0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_NH3_2010
+ .0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_OC_2010.
+ 0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_PM2.5_20
+ 10.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_PM10_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_BIGALK_2
+ 010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_BIGENE_2
+ 010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_C2H4_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_C2H5OH_2
+ 010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_C2H6_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_CH2O_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_CH3CHO_2
+ 010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_CH3COCH3
+ _2010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_CH3OH_20
+ 10.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_MEK_2010
+ .0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_TOLUENE_
+ 2010.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_C3H6_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ data_file_init: Initializing type for src emission file EDGAR_HTAP_emi_C3H8_201
+ 0.0.1x0.1.nc
+ data_file_init:  nlon_src, nlat_src =         3600        1800
+ data_file_init: data_dx,dx,has_area_map =    11117.58       30000.00     T
+ ====================================================
+ get_units: con_fac(1,2) =   3.6000000E+12  1.0000000E+09
+ ====================================================
+  
+ will use source file for CO
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_CO_2010.0.1x0.1.
+ nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.0966444E-07
+ aera_interp: raw dataset max indices =         2391        1435
+  
+ will use source file for NOx
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_NOx_2010.0.1x0.1
+ .nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   8.9488275E-08
+ aera_interp: raw dataset max indices =         2178        1460
+  
+ will use source file for SO2
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_SO2_2010.0.1x0.1
+ .nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.2883753E-07
+ aera_interp: raw dataset max indices =         2283        1195
+  
+ will use source file for NH3
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_NH3_2010.0.1x0.1
+ .nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.9660484E-09
+ aera_interp: raw dataset max indices =         2040        1454
+  
+ will use source file for OC
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_OC_2010.0.1x0.1.
+ nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   1.8688715E-09
+ aera_interp: raw dataset max indices =         2176        1372
+  
+ will use source file for PM2.5
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_PM2.5_2010.0.1x0
+ .1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   2.6892710E-08
+ aera_interp: raw dataset max indices =         2176        1372
+  
+ will use source file for PM10
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_PM10_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.4978392E-08
+ aera_interp: raw dataset max indices =         2176        1372
+  
+ will use source file for BIGALK
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_BIGALK_2010.0.1x
+ 0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   4.1150766E-08
+ aera_interp: raw dataset max indices =         2281        1174
+  
+ will use source file for BIGENE
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_BIGENE_2010.0.1x
+ 0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   1.9731126E-09
+ aera_interp: raw dataset max indices =         1027        1151
+  
+ will use source file for C2H4
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_C2H4_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.3862864E-09
+ aera_interp: raw dataset max indices =         1027        1151
+  
+ will use source file for C2H5OH
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_C2H5OH_2010.0.1x
+ 0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   2.6698370E-09
+ aera_interp: raw dataset max indices =         2169         888
+  
+ will use source file for C2H6
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_C2H6_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   5.8028546E-09
+ aera_interp: raw dataset max indices =         2281        1174
+  
+ will use source file for CH2O
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_CH2O_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   2.7646250E-09
+ aera_interp: raw dataset max indices =         2287        1199
+  
+ will use source file for CH3CHO
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_CH3CHO_2010.0.1x
+ 0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   7.0511619E-10
+ aera_interp: raw dataset max indices =         1931         830
+  
+ will use source file for CH3COCH3
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_CH3COCH3_2010.0.
+ 1x0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   1.9180632E-10
+ aera_interp: raw dataset max indices =         2169         888
+  
+ will use source file for CH3OH
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_CH3OH_2010.0.1x0
+ .1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   2.4897007E-10
+ aera_interp: raw dataset max indices =         2169         888
+  
+ will use source file for MEK
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_MEK_2010.0.1x0.1
+ .nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   9.1670849E-10
+ aera_interp: raw dataset max indices =         2169         888
+  
+ will use source file for TOLUENE
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_TOLUENE_2010.0.1
+ x0.1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   9.5435784E-09
+ aera_interp: raw dataset max indices =         1027        1151
+  
+ will use source file for C3H6
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_C3H6_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   3.2875394E-09
+ aera_interp: raw dataset max indices =         1787        1506
+  
+ will use source file for C3H8
+  
+ get_src_time_ndx; src_dir,src_fn = 
+ /home/WUR/barte035/WRFChem/EDGAR/ANTHRO/MOZCART/EDGAR_HTAP_emi_C3H8_2010.0.1x0.
+ 1.nc
+ get_src_time_ndx; interp_date,datesec,ntimes =     20100101           0
+          12
+ get_src_time_ndx; tndx =            1
+ aera_interp: raw dataset max value   =   1.8041920E-08
+ aera_interp: raw dataset max indices =         2281        1174
+  
+ ----------------------------------
+ anthro_emis completed successfully
+ ----------------------------------
