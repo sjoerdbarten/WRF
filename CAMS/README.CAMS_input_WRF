@@ -1,0 +1,37 @@
+#################################
+#	README CAMS WRF		#
+#   Sjoerd Barten, 2025/08/08	#
+#     sjoerd.barten@wur.nl      #
+#################################
+
+This README describes how to use CAMS as initial and boundary conditions for WRF simulations for future reference. Please follow the steps below.
+Note that processing of CAMS initial and boundary conditions comes after WRF real.exe as wrfinput_d0* and wrfbdy_d01 are used as input.
+
+Step 1: Download CAMS data.
+CAMS data is freely available at the Atmosphere Data Store (ads.atmosphere.copernicus.eu). It requires you to have a registered account, but these can be made free of charge. Apart from downloading through the interactive website, you can download CAMS data through API requests. For simplicity, this README only describes how to download the data through the website.
+You will need to download CAMS from here: https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=download
+
+Step 1.1: Download data:
+Select the following parameters: surface pressure (single level); Carbon monoxide, Peroxyacetyl nitrate, Sulphur dioxide, Ozone, Nitrogen dioxide, Nitrogen monoxide, Formaldehyde, Isoprene, Nitric acid (multi-level)
+Select all model levels
+Select the time period (year, month and day) of your WRF simulation. Note that times are always in UTC and take the model spin-up into account.
+Select the times of day of which you want the CAMS data. You provide the model with the boundary conditions every hour, every 3 hours or every 6 hours (make sure to check your namelist.wps about this timestepping!).
+Select the sub-region to extract (to save time and storage space). Make sure that your subtracted region completely covers your WRF model domain.
+Select NETCDF Format.
+Submit form and wait for the download to be ready.
+
+Step 2: Prepare the CAMS data.
+Put your CAMS data in the %/CAMS/input folder.
+We need to split the 1 file into dayfiles with the split_dayfiles.sh script. Investigate the script, check the settings and run the script with ./split_dayfiles.sh. This should give you all the days as separate files.
+
+Step 3: Run the wrf_CAMS_ibcs.py script.
+This script does the actual processing of CAMS data, the sript itself contains more README help.
+It is recommended to run all functions one by one. The differnt functions are located at the bottom of the script and explained below:
+make_1x1_molefractions				#Makes the molefractions from CAMS on a 1x1 degree grid.
+convert_1x1_molefractions			#Converts the molefractions from kg/kg to mol/mol
+zero_tracers_in_wrf_ibcs			#Prepares wrfinput and wrfbdy for assimilation of CAMS data (zeros all tracers)
+add_bg_to_wrfinput				#Adds CAMS tracers to wrfinput
+add_bg_to_wrfbdy				#Adds CAMS tracers and tendencies to wrfbdy
+
+Step 4: Check whether script ran succesfully and continue as usual
+The script edits your wrfinput and wrfbdy files. Include them in the folder where you are planning to run WRF and continue as usual (typically running wrf.exe but maybe you need to still prepare specific emission files)
