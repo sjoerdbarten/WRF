@@ -1,0 +1,8 @@
+&control
+
+domains = 1,
+start_lai_mnth = 8,
+end_lai_mnth = 9,
+wrf_dir = '/home/WUR/barte035/WRFChem/WRFV4.1.1/run',
+megan_dir = '/home/WUR/barte035/WRFChem/MEGAN'
+/
