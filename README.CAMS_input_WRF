@@ -23,6 +23,7 @@ Submit form and wait for the download to be ready.
 Step 2: Prepare the CAMS data.
 Put your CAMS data in the %/CAMS/input folder.
 We need to split the 1 file into dayfiles with the split_dayfiles.sh script. Investigate the script, check the settings and run the script with ./split_dayfiles.sh. This should give you all the days as separate files.
+Put the new split_day/ files in the input directory.
 
 Step 3: Run the wrf_CAMS_ibcs.py script.
 This script does the actual processing of CAMS data, the sript itself contains more README help.
